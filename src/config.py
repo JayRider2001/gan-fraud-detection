@@ -63,3 +63,12 @@ MODELS = {
     "smote": ARTIFACTS / "xgb_smote.json",
     "gan": ARTIFACTS / "xgb_gan.json",
 }
+
+SHAP_BG = ARTIFACTS / "shap_background.npy"
+AUDIT_DB = ARTIFACTS / "audit.db"
+AGENT_EVAL_PATH = ARTIFACTS / "agent_eval.json"
+OOD_Z = 8.0  # |scaled feature| above this is flagged as out-of-distribution
+
+# Case-agent LLM. Used only when XAI_API_KEY is set. The eval runs scripted, offline.
+XAI_MODEL = "grok-4.7"
+XAI_BASE_URL = "https://api.x.ai/v1"

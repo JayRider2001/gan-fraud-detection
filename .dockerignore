@@ -1,0 +1,9 @@
+.venv
+.git
+data/*.csv
+artifacts/processed.npz
+artifacts/synthetic_fraud.npy
+artifacts/audit.db
+__pycache__
+*.pyc
+docs

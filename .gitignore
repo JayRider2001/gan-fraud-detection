@@ -15,6 +15,8 @@ artifacts/*
 !artifacts/generator.keras
 !artifacts/critic.keras
 !artifacts/xgb_gan.json
+!artifacts/shap_background.npy
+!artifacts/agent_eval.json
 .ipynb_checkpoints/
 *.egg-info/
 .mypy_cache/

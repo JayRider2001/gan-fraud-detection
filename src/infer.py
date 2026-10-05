@@ -8,19 +8,9 @@ import sys
 
 import numpy as np
 import pandas as pd
-from xgboost import XGBClassifier
-
-from src.config import META_PATH, MODELS, THRESHOLD_PATH
-from src.data import load_scaler
-
-
-def load_bundle():
-    meta = json.loads(META_PATH.read_text())
-    thresholds = json.loads(THRESHOLD_PATH.read_text())
-    scaler = load_scaler()
-    model = XGBClassifier()
-    model.load_model(MODELS["gan"])
-    return meta, scaler, model, float(thresholds["gan"])
+from src.config import META_PATH
+from src.features import log1p_amount
+from src.serving import load_bundle
 
 
 def score_matrix(X_raw: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
@@ -52,13 +42,7 @@ def main(argv=None) -> int:
         if missing:
             print(f"missing columns: {missing}", file=sys.stderr)
             return 2
-        X = df[names].to_numpy(dtype=np.float64)
-        # Amount in the saved feature list is the log1p'd one; the CSV from Kaggle has raw Amount.
-        if "Amount" in names:
-            amt_idx = names.index("Amount")
-            # If values look like raw amounts (non-negative, some > 10), log1p them.
-            if np.nanmin(X[:, amt_idx]) >= 0:
-                X[:, amt_idx] = np.log1p(X[:, amt_idx])
+        X = log1p_amount(df[names].to_numpy(dtype=np.float64), names)
         proba, flag = score_matrix(X)
         out = df.copy()
         out["p_fraud"] = proba
@@ -69,12 +53,8 @@ def main(argv=None) -> int:
 
     if args.values:
         raw = np.fromstring(args.values, sep=",", dtype=np.float64).reshape(1, -1)
-        X = raw.copy()
         names = json.loads(META_PATH.read_text())["feature_names"]
-        if "Amount" in names:
-            amt_idx = names.index("Amount")
-            if X[0, amt_idx] >= 0:
-                X[0, amt_idx] = np.log1p(X[0, amt_idx])
+        X = log1p_amount(raw.copy(), names)
         proba, flag = score_matrix(X)
         print(f"P(fraud) = {proba[0]:.4f}   flag = {int(flag[0])}   (thr={thr:.4f})")
         return 0

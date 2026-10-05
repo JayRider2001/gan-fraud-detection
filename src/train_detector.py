@@ -16,6 +16,7 @@ from imblearn.over_sampling import SMOTE
 from xgboost import XGBClassifier
 
 from src.config import METRICS_PATH, MODELS, SEED, SYNTH_PATH, THRESHOLD_PATH, XGB_PARAMS
+from src.explain import save_background
 from src.data import fraud_only, load_processed
 from src.evaluate import best_f1_threshold, full_report
 from src.generate import n_synth_for
@@ -111,6 +112,7 @@ def train() -> dict:
 
     plot_pr_curves({k: (y_te, test_probas[k]) for k in test_probas})
     plot_tsne(fraud_only(X_tr, y_tr), fake, X_tr[y_tr == 0])
+    save_background(X_tr)
 
     METRICS_PATH.write_text(json.dumps(results, indent=2))
     THRESHOLD_PATH.write_text(json.dumps(thresholds, indent=2))

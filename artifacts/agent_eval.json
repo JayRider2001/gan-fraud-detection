@@ -1,0 +1,523 @@
+{
+  "n_cases": 30,
+  "cases_passed": 30,
+  "policy_passed": 12,
+  "policy_total": 12,
+  "llm": "scripted",
+  "generator_loaded": false,
+  "auprc": {
+    "recomputed_test_auprc": 0.8500394053197704,
+    "metrics_json_test_auprc": 0.8500394053197704,
+    "abs_delta": 0.0,
+    "pass": true
+  },
+  "cases": [
+    {
+      "n": 1,
+      "kind": "legit",
+      "audit_id": 3,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 2.2430624085245654e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 2,
+      "kind": "legit",
+      "audit_id": 4,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 2.467553895257879e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 3,
+      "kind": "legit",
+      "audit_id": 5,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 8.020670975383837e-06,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 4,
+      "kind": "legit",
+      "audit_id": 6,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 6.103079158492619e-06,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 5,
+      "kind": "legit",
+      "audit_id": 7,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 9.626487553759944e-06,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 6,
+      "kind": "legit",
+      "audit_id": 8,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 4.9689417210174724e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 7,
+      "kind": "legit",
+      "audit_id": 9,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 1.736383819661569e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 8,
+      "kind": "legit",
+      "audit_id": 10,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 6.562652561115101e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 9,
+      "kind": "legit",
+      "audit_id": 11,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 2.97591741400538e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 10,
+      "kind": "legit",
+      "audit_id": 12,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 2.426451101200655e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 11,
+      "kind": "fraud",
+      "audit_id": 13,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 0.012373209930956364,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 12,
+      "kind": "fraud",
+      "audit_id": 14,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 0.9960765242576599,
+      "flag": true,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 13,
+      "kind": "fraud",
+      "audit_id": 15,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 0.9948418736457825,
+      "flag": true,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 14,
+      "kind": "fraud",
+      "audit_id": 16,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 0.9096356630325317,
+      "flag": true,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 15,
+      "kind": "fraud",
+      "audit_id": 17,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 0.6337783932685852,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 16,
+      "kind": "fraud",
+      "audit_id": 18,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 0.9937524199485779,
+      "flag": true,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 17,
+      "kind": "fraud",
+      "audit_id": 19,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 0.1825629323720932,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 18,
+      "kind": "fraud",
+      "audit_id": 20,
+      "disposition": "queue_for_analyst",
+      "p_fraud": 0.9979034662246704,
+      "flag": true,
+      "tools": [
+        "score_row",
+        "explain_row",
+        "similar_reviews",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 19,
+      "kind": "ood",
+      "audit_id": 21,
+      "disposition": "abstain",
+      "p_fraud": 0.00021733916946686804,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 20,
+      "kind": "ood",
+      "audit_id": 22,
+      "disposition": "abstain",
+      "p_fraud": 2.6335806978750043e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 21,
+      "kind": "ood",
+      "audit_id": 23,
+      "disposition": "abstain",
+      "p_fraud": 1.345461259916192e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 22,
+      "kind": "ood",
+      "audit_id": 24,
+      "disposition": "abstain",
+      "p_fraud": 5.160761247680057e-06,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 23,
+      "kind": "ood",
+      "audit_id": 25,
+      "disposition": "abstain",
+      "p_fraud": 6.271418442338472e-06,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 24,
+      "kind": "ood",
+      "audit_id": 26,
+      "disposition": "abstain",
+      "p_fraud": 3.460635707597248e-05,
+      "flag": false,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 25,
+      "kind": "nan",
+      "audit_id": 27,
+      "disposition": "abstain",
+      "p_fraud": null,
+      "flag": null,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 26,
+      "kind": "nan",
+      "audit_id": 28,
+      "disposition": "abstain",
+      "p_fraud": null,
+      "flag": null,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 27,
+      "kind": "nan",
+      "audit_id": 29,
+      "disposition": "abstain",
+      "p_fraud": null,
+      "flag": null,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 28,
+      "kind": "nan",
+      "audit_id": 30,
+      "disposition": "abstain",
+      "p_fraud": null,
+      "flag": null,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 29,
+      "kind": "nan",
+      "audit_id": 31,
+      "disposition": "abstain",
+      "p_fraud": null,
+      "flag": null,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    },
+    {
+      "n": 30,
+      "kind": "nan",
+      "audit_id": 32,
+      "disposition": "abstain",
+      "p_fraud": null,
+      "flag": null,
+      "tools": [
+        "score_row",
+        "draft_case_note"
+      ],
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "policy": [
+    {
+      "name": "explain_before_score",
+      "pass": true
+    },
+    {
+      "name": "similar_before_explain",
+      "pass": true
+    },
+    {
+      "name": "shap_outside_topk",
+      "pass": true
+    },
+    {
+      "name": "cannot_set_confirm_fraud",
+      "pass": true
+    },
+    {
+      "name": "review_must_come_from_retrieval",
+      "pass": true
+    },
+    {
+      "name": "cannot_smuggle_p_fraud",
+      "pass": true
+    },
+    {
+      "name": "abstain_cannot_state_a_probability",
+      "pass": true
+    },
+    {
+      "name": "responses_tool_call_parser",
+      "pass": true
+    },
+    {
+      "name": "health",
+      "pass": true
+    },
+    {
+      "name": "missing_features_400",
+      "pass": true
+    },
+    {
+      "name": "api_non_finite_abstain",
+      "pass": true
+    },
+    {
+      "name": "api_ood_abstain",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

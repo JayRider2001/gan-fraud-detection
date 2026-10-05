@@ -2,7 +2,7 @@
 """Entry point. From the repo root:
 
     python run.py all
-    python run.py data|gan|detect|infer
+    python run.py data|gan|detect|infer|serve|ui|agent-eval
 """
 
 from __future__ import annotations
@@ -26,12 +26,17 @@ def main(argv=None) -> int:
         "stage",
         nargs="?",
         default="all",
-        choices=["all", "data", "gan", "detect", "infer"],
+        choices=["all", "data", "gan", "detect", "infer", "serve", "ui", "agent-eval"],
         help="which stage to run (default: all)",
     )
     p.add_argument("--csv", type=str, default=None, help="for infer: path to a CSV of raw transactions")
     p.add_argument("--values", type=str, default=None, help="for infer: comma-separated raw feature row")
     args = p.parse_args(argv)
+
+    if args.stage == "agent-eval":
+        from src.agent_eval import main as eval_main
+
+        return eval_main()
 
     if args.stage in ("all", "data"):
         from src.data import prepare
@@ -59,6 +64,19 @@ def main(argv=None) -> int:
         if args.values:
             infer_argv += ["--values", args.values]
         return infer_main(infer_argv)
+
+    if args.stage == "serve":
+        import uvicorn
+
+        uvicorn.run("api.app:app", host="0.0.0.0", port=8000, reload=False)
+        return 0
+
+    if args.stage == "ui":
+        import subprocess
+
+        return subprocess.call(
+            [sys.executable, "-m", "streamlit", "run", str(ROOT / "app" / "ui.py"), "--server.port", "8501"]
+        )
 
     return 0
 

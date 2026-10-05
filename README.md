@@ -12,6 +12,43 @@ CSV  →  stratified split  →  WGAN-GP on train fraud only  →  mix real+fake
 
 At inference the generator is **not loaded**. Only the scaler and XGBoost run.
 
+## Applied AI layer
+
+The GAN is the training-time fraud factory. The thing an analyst runs is a system: a scoring API, SHAP, a review desk, an audit log, and a case agent that is only allowed to draft.
+
+The agent has four tools and no others.
+
+| tool | what it may do |
+|---|---|
+| `score_row` | run the shipped XGBoost. The validation threshold owns the flag. Tool arguments are ignored, so the model cannot hand in its own probability. |
+| `explain_row` | SHAP top features for that audit id. Refused if the row was not scored or is out of distribution. |
+| `similar_reviews` | cosine retrieval over **past analyst decisions** in the SQLite log, using the SHAP vector. |
+| `draft_case_note` | a note whose every sentence cites a score id, a SHAP feature, a retrieved review, or an OOD feature the guardrail actually returned. |
+
+`confirm_fraud` and `false_alarm` stay on `POST /review`. The agent cannot write them. `V1`–`V28` are PCA components, so a note cites the component and does not invent a merchant.
+
+Non-finite rows produce no probability. Out-of-distribution rows are still scored (the number is real) and the note disposition is `abstain`, which means a person has to look before the flag is treated as a case decision.
+
+With `XAI_API_KEY` set, the clerk is Grok (`grok-4.7`) through the xAI Responses API and those tools. The tool executor rejects an out-of-order call or a bad citation. If that call fails, the scripted clerk finishes the note and the response includes `llm_error`. With no key, or when the eval runs, the scripted clerk walks the same tools. `python run.py agent-eval` is offline: 30 cases, policy checks that illegal notes are rejected, a FastAPI smoke test, a recomputed test AUPRC that must match `metrics.json`, and a check that `src.gan` was never imported.
+
+| component | where |
+|---|---|
+| REST API | `api/app.py` — `/score`, `/case`, `/review`, `/health`, `/metrics` |
+| Case agent | `src/case_agent.py` |
+| Eval | `src/agent_eval.py`, report in `artifacts/agent_eval.json` |
+| Explainability | `src/explain.py` SHAP TreeExplainer |
+| Human review | Streamlit `app/ui.py` and `POST /review` |
+| Audit log | `src/audit.py` SQLite |
+| Guardrails | `src/guardrails.py` — non-finite reject, OOD flags |
+| Docker | `Dockerfile` — generator is not on the serve path |
+
+```bash
+curl -s localhost:8000/health
+curl -s localhost:8000/case -H 'content-type: application/json' \
+  -d '{"features": {"Time": 0, "V1": -1.3, "V2": 0, "V3": 0, "V4": 0, "V5": 0, "V6": 0, "V7": 0, "V8": 0, "V9": 0, "V10": 0, "V11": 0, "V12": 0, "V13": 0, "V14": 0, "V15": 0, "V16": 0, "V17": 0, "V18": 0, "V19": 0, "V20": 0, "V21": 0, "V22": 0, "V23": 0, "V24": 0, "V25": 0, "V26": 0, "V27": 0, "V28": 0, "Amount": 149.62}, "live": false}'
+python run.py agent-eval
+```
+
 ## Why WGAN-GP
 
 Vanilla GAN training often dies (flat generator gradients, mode collapse). This repo implements Wasserstein GAN with gradient penalty in TensorFlow:
@@ -68,6 +105,14 @@ python run.py data      # download + split + scale
 python run.py gan       # train WGAN-GP, sample fakes
 python run.py detect    # three XGBs, plots, metrics.json
 python run.py infer --csv path/to/rows.csv
+python run.py serve       # FastAPI on :8000  (POST /score, POST /case, POST /review)
+python run.py ui          # Streamlit review desk on :8501
+python run.py agent-eval  # offline case-agent eval; does not call Grok
+```
+
+```bash
+docker build -t gan-fraud .
+docker run --rm -p 8000:8000 gan-fraud
 ```
 
 Dataset is pulled from TensorFlow’s public mirror of the ULB / Kaggle credit-card set (European cardholders, September 2013). `Time`, `V1`–`V28` (PCA), `Amount`. `Amount` is `log1p`’d then scaled.
@@ -114,7 +159,15 @@ src/generate.py         sample synthetic fraud
 src/train_detector.py   weighted / SMOTE / GAN-aug XGBoost
 src/evaluate.py         AUPRC, F1 threshold, confusion
 src/infer.py            scaler + XGB only
+src/explain.py          SHAP on the detector
+src/audit.py            SQLite score, SHAP vector, case note, human override
+src/guardrails.py       schema / OOD checks
+src/case_agent.py       score / explain / retrieve / draft
+src/agent_eval.py       offline eval of that agent
+api/app.py              FastAPI
+app/ui.py               Streamlit review desk
 run.py                  CLI
+Dockerfile              CPU serve image
 ```
 
 ## Limitations
@@ -126,4 +179,4 @@ run.py                  CLI
 
 ## Interview paragraph
 
-Fraud is rare, so a WGAN-GP is trained on train-set frauds to print extra minority rows. The critic scores real vs fake; the generator maximises that score (`loss = −mean(C(fake))`); a gradient penalty keeps the critic 1-Lipschitz. Fakes are mixed into training, XGBoost is fit, a threshold is chosen on validation, and AUPRC is compared against class weights and SMOTE on a frozen test set. The GAN never sees production traffic.
+Fraud is rare, so a WGAN-GP is trained on train-set frauds to print extra minority rows. The critic scores real vs fake; the generator maximises that score (`loss = −mean(C(fake))`); a gradient penalty keeps the critic 1-Lipschitz. Fakes are mixed into training, XGBoost is fit, a threshold is chosen on validation, and AUPRC is compared against class weights and SMOTE on a frozen test set. At review time the generator is not loaded. A tool-calling case agent can score a row, read SHAP, retrieve similar past decisions, and draft a cited note. It cannot change the flag. A person confirms fraud or marks a false alarm, and that decision is what later cases retrieve.
