@@ -177,6 +177,3 @@ Dockerfile              CPU serve image
 - Two days in 2013, not a production stream. No concept drift.
 - If GAN-aug does not beat SMOTE, that is a valid outcome and is reported as a comparison, not a fake SOTA.
 
-## Interview paragraph
-
-Fraud is rare, so a WGAN-GP is trained on train-set frauds to print extra minority rows. The critic scores real vs fake; the generator maximises that score (`loss = −mean(C(fake))`); a gradient penalty keeps the critic 1-Lipschitz. Fakes are mixed into training, XGBoost is fit, a threshold is chosen on validation, and AUPRC is compared against class weights and SMOTE on a frozen test set. At review time the generator is not loaded. A tool-calling case agent can score a row, read SHAP, retrieve similar past decisions, and draft a cited note. It cannot change the flag. A person confirms fraud or marks a false alarm, and that decision is what later cases retrieve.
